@@ -1,30 +1,26 @@
 package com.colinchartier.mvcexample;
 
+import com.colinchartier.mvcexample.commands.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 public class Main {
   public static void main(String[] args) throws IOException {
     String path = "/";
 
     BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+    Filesystem fs = new Filesystem(); //model
+    Terminal t = new Terminal(); // view
+    HashMap<String, Command> commands = new HashMap<>();
+    commands.put("ls", new ListCommand(t, fs)); //gluing the model to the view with logic!
     while(true) {
-      System.out.print("> ");
-      String line = r.readLine();
-      if("ls".equals(line)) {
-        for(File f : new File(path).listFiles()) {
-          System.out.println("File: " + f);
-        }
-      } else if(line.startsWith("cd")) {
-        path = line.split(" ", 2)[1];
-        System.out.println("Path is now " + path);
-      } else if("pwd".equals(line)) {
-        System.out.println("Current path: " + path);
-      } else if("exit".equals(line)) {
-        System.exit(0);
-      }
+      //interact with view, e.g., if button is clicked or something
+      String command = t.promptLine();
+      String commandArgs = command.split(" ", 2)[1];
+      commands.get(command.split(" ", 2)[0]).exec(commandArgs.split(" "));
     }
   }
 }
