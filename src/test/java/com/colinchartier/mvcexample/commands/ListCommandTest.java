@@ -1,9 +1,9 @@
 package com.colinchartier.mvcexample.commands;
 
-import org.junit.Test;
-
 import com.colinchartier.mvcexample.Filesystem;
 import com.colinchartier.mvcexample.Terminal;
+
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -24,9 +24,16 @@ public class ListCommandTest {
             return "ls /a";
           }
         }, new Filesystem() {
-    });
+          public String[] listDirectoryFiles(String file) {
+            if("/a".equals(file)) {
+              return new String[] {"hello"};
+            }
+            return new String[] {"sad"};
+          }
+        }
+    );
 
-    assert ls.exec(new String[] {"/a"}); //runs it, asserts it is true
+    assert ls.exec(new String[]{"/a"}); //runs it, asserts it is true
     //if this is not hello, we are not helloing today.
     assert whatWasPrinted.equals("hello");
   }
