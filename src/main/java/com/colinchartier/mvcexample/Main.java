@@ -12,10 +12,18 @@ public class Main {
     String path = "/";
 
     BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+
     Filesystem fs = new Filesystem(); //model
     Terminal t = new Terminal(); // view
+
+    // part of the controller!
+    // it contains logic!
+    ShellInstance shell = new ShellInstance();
+
     HashMap<String, Command> commands = new HashMap<>();
     commands.put("ls", new ListCommand(t, fs)); //gluing the model to the view with logic!
+    commands.put("cd", new ChangeDirectoryCommand(shell));
+
     while(true) {
       //interact with view, e.g., if button is clicked or something
       String command = t.promptLine();
