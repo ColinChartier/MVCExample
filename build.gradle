@@ -1,3 +1,4 @@
+// See https://docs.gradle.org/current/userguide/tutorial_java_projects.html
 apply plugin: 'java'
 
 repositories {
@@ -6,4 +7,7 @@ repositories {
 
 dependencies {
   testCompile group: 'junit', name: 'junit', version: '4.+'
+
+  // See http://www.vogella.com/tutorials/Mockito/article.html
+  testCompile "org.mockito:mockito-core:2.+"
 }
