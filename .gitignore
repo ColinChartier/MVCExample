@@ -1,1 +1,10 @@
 out/
+
+# gradle build output
+build/
+gradle/
+
+# gradle meta
+gradlew
+gradlew.bat
+.gradle/
